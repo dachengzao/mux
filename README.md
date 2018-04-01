@@ -33,6 +33,32 @@ With a [correctly configured](https://golang.org/doc/install#testing) Go toolcha
 
 	go get github.com/dachengzao/mux
 
+## 解读
+
+mux 是一个 Request 路由器分派器( 大家习惯上讲路由 router ). mux doc 非常的强大.
+
+```go
+r := mux.NewRouter()
+r.Host("{subdomain}.domain.com").
+  Path("/articles/{category}/{id:[0-9]+}").
+  HandlerFunc(ArticleHandler).
+  Name("article")
+// url.String() will be "http://news.domain.com/articles/technology/42"
+url, err := r.Get("article").URL("subdomain", "news","category", "technology","id", "42")
+```
+
+#### 支持正则
+前缀路由 r.PathPrefix("/products/") 匹配所有 “/products/” 开头的 Request
+Method 路由 r.Methods("get") 匹配 GET 请求
+
+子路由 r.PathPrefix("/products").Subrouter(), 这样与前缀路由(或者其他,比如Method)配合, 可以更细致的控制
+
+URL parameter s.HandleFunc("/articles/{category}/{id:[0-9]+}"), ArticleHandler) ,解析路径中的变量
+
+Host 路由 r.Host("{subdomain}.domain.com"), 是的,子域名匹配什么的就这么简单
+StrictSlash,访问 “/path” 实际到 “/path/“, 其实问题很复杂, 看了net/http的代码,你就理解了.
+组合路由, 各种路由组合到一起不可思议的安逸.
+
 ## Examples
 
 Let's start registering a couple of URL paths and handlers:
