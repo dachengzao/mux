@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gorilla/context"
+	"github.com/dachengzao/context"
 )
 
 // Tests that the context is cleared or not cleared properly depending on

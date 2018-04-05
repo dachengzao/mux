@@ -5,7 +5,7 @@ package mux
 import (
 	"net/http"
 
-	"github.com/gorilla/context"
+	"github.com/dachengzao/context"
 )
 
 func contextGet(r *http.Request, key interface{}) interface{} {
